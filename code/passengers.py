@@ -1,6 +1,10 @@
 """ A set of functions to access and manipulate titanic passenger data
 
 
+TODO: feature selection
+2. test features for generalized predictability
+http://www.datasciencecentral.com/profiles/blogs/feature-selection-based-on-predictive-power
+
 TODO: feature engineering
 1. determine ethnicity from last name
 
@@ -18,7 +22,9 @@ import math
 bias = 1
 
 
-def get_passengers(df):
+def get_passengers():
+    df = pandas.read_csv('../data/train.csv')
+
     passengers = None
     for i, passenger in df.iterrows():
         # pclass

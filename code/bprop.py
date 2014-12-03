@@ -95,8 +95,7 @@ def output_test_predictions(a, b):
 
 def main():
     """ Run Neural Network"""
-    df = pandas.read_csv('../data/train.csv')
-    xm = passengers.get_passengers(df)
+    xm = passengers.get_passengers()
 
     # initial weights
     a = np.array([1.0, 1.0, 1.0, 1.0, 1.0, 1.0])

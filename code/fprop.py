@@ -98,8 +98,7 @@ There is no actual learning being done in the feed-forward NN.
 
 """
 def main():
-    df = pandas.read_csv('../data/train.csv')
-    xm = get_passengers(df)
+    xm = get_passengers()
 
     # initial weights
     a = np.array([ 1.12722457, -0.52870122, 2.64153881, -0.63675977, 0.85424979, 0.49468403])
