@@ -121,7 +121,7 @@ def main():
             #print b_der
             #print z
 
-            # for use in calculating perdiction accuracy as model progresses
+            # for use in calculating prediction accuracy as model progresses
             if z < .5:
                 z_prediction = 0.0
             else:
@@ -134,48 +134,19 @@ def main():
             errors.append(E)
 
             if len(derivatives) == 0:
-                derivatives.append(b_der[0])
-                derivatives.append(b_der[1])
-                derivatives.append(b_der[2])
-                derivatives.append(b_der[3])
-                derivatives.append(b_der[4])
-                derivatives.append(b_der[5])
-
-                derivatives.append(a_der[0])
-                derivatives.append(a_der[1])
-                derivatives.append(a_der[2])
-                derivatives.append(a_der[3])
-                derivatives.append(a_der[4])
-                derivatives.append(a_der[5])
+                for i in xrange(6):
+                    derivatives.append(b_der[i])
+                for i in xrange(6):
+                    derivatives.append(a_der[i])
             else:
-                derivatives[0] += b_der[0]
-                derivatives[1] += b_der[1]
-                derivatives[2] += b_der[2]
-                derivatives[3] += b_der[3]
-                derivatives[4] += b_der[4]
-                derivatives[5] += b_der[5]
-
-                derivatives[6] += a_der[0]
-                derivatives[7] += a_der[1]
-                derivatives[8] += a_der[2]
-                derivatives[9] += a_der[3]
-                derivatives[10] += a_der[4]
-                derivatives[11] += a_der[5]
+                for i in xrange(6):
+                    derivatives[i] += b_der[i]
+                    derivatives[i+6] += a_der[i]
 
         # update
-        b[0] += derivatives[0]*(-learning_rate)
-        b[1] += derivatives[1]*(-learning_rate)
-        b[2] += derivatives[2]*(-learning_rate)
-        b[3] += derivatives[3]*(-learning_rate)
-        b[4] += derivatives[4]*(-learning_rate)
-        b[5] += derivatives[5]*(-learning_rate)
-
-        a[0] += derivatives[6]*(-learning_rate)
-        a[1] += derivatives[7]*(-learning_rate)
-        a[2] += derivatives[8]*(-learning_rate)
-        a[3] += derivatives[9]*(-learning_rate)
-        a[4] += derivatives[10]*(-learning_rate)
-        a[5] += derivatives[11]*(-learning_rate)
+        for i in xrange(6):
+            b[i] += derivatives[i]*(-learning_rate)
+            a[i] += derivatives[i+6]*(-learning_rate)
 
         print a
         print b
