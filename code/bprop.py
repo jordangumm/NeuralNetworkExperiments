@@ -83,8 +83,7 @@ def output_training_predictions(a, b, xm):
 
 
 def output_test_predictions(a, b):
-    df = pandas.read_csv('../data/test.csv')
-    xm = passengers.get_passengers(df)
+    xm = passengers.get_passengers()
 
     training_predictions = open('../data/predictions/test_predictions.csv', 'w+')
     training_predictions.write('PassengerId,Survived\n')

@@ -1,6 +1,7 @@
 import numpy as np
 import pandas
 import math
+import passengers
 
 
 def get_input_matrix(data):
@@ -70,35 +71,15 @@ def predict(x, a, b):
     else:
         return '1'
 
-""" UNUSED AS OF NOW
-def output_training_predictions(a, b, xm):
-    training_predictions = open('../data/predictions/training_predictions.csv', 'w+')
-    training_predictions.write('PassengerId,Survived\n')
-    for passenger in xm:
-        training_predictions.write('%s, %s\n' % (str(int(passenger[0,7])), str(int(predict(passenger, a, b)))))
-    training_predictions.close()
 
-
-def output_test_predictions(a, b):
-    df = pandas.read_csv('data/test.csv')
-    xm = get_passengers(df)
-
-    training_predictions = open('../data/predictions/test_predictions.csv', 'w+')
-    training_predictions.write('PassengerId,Survived\n')
-    for passenger in xm:
-        training_predictions.write('%s, %s\n' % (str(int(passenger[0,6])), str(int(predict(passenger, a, b)))))
-    training_predictions.close()
-"""
-
-
-""" Main Loop
-
-Initial weights were updated to match the best found in bprop.py
-There is no actual learning being done in the feed-forward NN.
-
-"""
 def main():
-    xm = get_passengers()
+    """ Main Loop
+
+    Initial weights were updated to match the best found in bprop.py
+    There is no actual learning being done in the feed-forward NN.
+
+    """
+    xm = passengers.get_passengers()
 
     # initial weights
     a = np.array([ 1.12722457, -0.52870122, 2.64153881, -0.63675977, 0.85424979, 0.49468403])
