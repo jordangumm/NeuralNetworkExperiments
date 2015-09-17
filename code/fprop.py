@@ -1,3 +1,14 @@
+#!/usr/bin/env python
+"""
+An implementation of a feed-forward neural network, created for the author's
+own edification.
+
+
+"""
+
+__author__ = "Jordan N. Gumm"
+__email__  = "gumm1jn@cmich.edu"
+
 import numpy as np
 import pandas
 import math
@@ -9,34 +20,35 @@ def get_input_matrix(data):
 
     Initialize matrix.  Iteratively fill out matrix.  Return matrix.
     """
-    data.readline() # skip headers
+    data.readline()  # skip headers
     v = data.readline()
     v = v.split(',')
     v[3] = v[3].replace(',', '')
     xm = np.matrix([1, float(v[2]), float(v[6]), float(v[7]), float(v[1])])
 
     for v in data.readlines():
-        if ',,' not in v: # blank entries!!!
+        if ',,' not in v:  # blank entries!!!
             v = v.split(',')
-            xm = np.vstack((xm, [1, float(v[2]), float(v[6]), float(v[7]), float(v[1])]))
+            xm = np.vstack((xm, [1, float(v[2]), float(v[6]),
+                            float(v[7]), float(v[1])]))
 
     return xm
 
 
 def get_derivatives(a, b, x, target):
-    a_der = [] # hidden layer weights
-    b_der = [] # output weights
+    a_der = []  # hidden layer weights
+    b_der = []  # output weights
 
-    u = a[0] + x[0,1]*a[1] + x[0,2]*a[2] + x[0,3]*a[3] + x[0,4]*a[4] + x[0,5]*a[5] # linear input (weighted sum)
-    y = 1/(1+(np.exp(-u))) # sigmoid hidden layer output
-    v = b[0] + b[1]*y + b[2]*y + b[3]*y + b[4]*y + b[5]*y # linear input from hidden layer (weighted sum)
-    z = 1/(1+(np.exp(-v))) # sigmout final output
-    z_final = z # for export
+    u = a[0] + x[0, 1]*a[1] + x[0, 2]*a[2] + x[0, 3]*a[3] + x[0, 4]*a[4] + x[0, 5]*a[5]  # linear input (weighted sum)
+    y = 1/(1+(np.exp(-u)))  # sigmoid hidden layer output
+    v = b[0] + b[1]*y + b[2]*y + b[3]*y + b[4]*y + b[5]*y  # linear input from hidden layer (weighted sum)
+    z = 1/(1+(np.exp(-v)))  # sigmout final output
+    z_final = z  # for export
 
-    p = (z-target)* (z * (1-z)) # error derivative with respect to the weights
-    b_der.append(p) # b[0] = p or 1/(1+(np.exp(-v)))
+    p = (z-target)* (z * (1-z))  # error derivative with respect to the weights
+    b_der.append(p)  # b[0] = p or 1/(1+(np.exp(-v)))
 
-    for i in range(1,6): # number of derivatives
+    for i in range(1,6):  # number of derivatives
 
         # hidden layer mapping linear input function to sigmoid function
         u = a[0] + x[0,i]*a[i]
@@ -48,7 +60,7 @@ def get_derivatives(a, b, x, target):
 
         q = (p * b[i]) * y * (1-y)
 
-        if i == 1: # save bias weight along with x1 weight
+        if i == 1:  # save bias weight along with x1 weight
             b_der.append(p * y)
 
             a_der.append(q)
@@ -61,10 +73,10 @@ def get_derivatives(a, b, x, target):
 
 
 def predict(x, a, b):
-    u = a[0] + x[0,1]*a[1] + x[0,2]*a[2] + x[0,3]*a[3] + x[0,4]*a[4] + x[0,5]*a[5] # linear input (weighted sum)
+    u = a[0] + x[0,1]*a[1] + x[0,2]*a[2] + x[0,3]*a[3] + x[0,4]*a[4] + x[0,5]*a[5]  # linear input (weighted sum)
     y = 1/(1+(np.exp(-u))) # sigmoid hidden layer output
-    v = b[0] + b[1]*y + b[2]*y + b[3]*y + b[4]*y + b[5]*y # linear input from hidden layer (weighted sum)
-    z = 1/(1+(np.exp(-v))) # sigmout final output
+    v = b[0] + b[1]*y + b[2]*y + b[3]*y + b[4]*y + b[5]*y  # linear input from hidden layer (weighted sum)
+    z = 1/(1+(np.exp(-v)))  # sigmout final output
 
     if z < .5:
         return '0'
@@ -82,7 +94,7 @@ def main():
     xm = passengers.get_passengers()
 
     # initial weights
-    a = np.array([ 1.12722457, -0.52870122, 2.64153881, -0.63675977, 0.85424979, 0.49468403])
+    a = np.array([1.12722457, -0.52870122, 2.64153881, -0.63675977, 0.85424979, 0.49468403])
     b = np.array([-0.6518991, -0.29197426, 3.11292552, -1.12959643, -2.27068905, 0.84231814])
 
     errors = []
@@ -113,7 +125,7 @@ def main():
     print a
     print b
     print 'MSE = ' + str(sum(errors)/len(errors))
-    print 'Prediction Rate:' +  str(float(correct_predictions)/float(total_predictions))
+    print 'Prediction Rate:' + str(float(correct_predictions)/float(total_predictions))
     print '\n'
 
 if __name__ == "__main__":

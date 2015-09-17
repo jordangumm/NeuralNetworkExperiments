@@ -1,3 +1,17 @@
+#!/usr/bin/env python
+"""
+An implementation of a feed-forward neural network with backpropagation,
+created for the author's own edification.
+
+TODO:
+implement momentum
+experiment with data encoding and normalization
+
+"""
+
+__author__ = "Jordan N. Gumm"
+__email__  = "gumm1jn@cmich.edu"
+
 import numpy as np
 import pandas
 import passengers
